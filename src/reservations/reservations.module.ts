@@ -11,6 +11,6 @@ import { ReservationSeedService } from './reservation-seed.service';
   imports: [TypeOrmModule.forFeature([ReservationEntity, RoomEntity])],
   controllers: [ReservationsController],
   // TODO 2: Register ReservationRulesService as a provider.
-  providers: [ReservationsService, ReservationSeedService],
+  providers: [ReservationsService, ReservationSeedService, ReservationRulesService],
 })
 export class ReservationsModule {}
