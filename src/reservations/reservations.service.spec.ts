@@ -10,20 +10,20 @@ import { ReservationsService } from './reservations.service';
 describe('ReservationsService', () => {
   let service: ReservationsService;
   let reservationsRepositoryMock: {
-    findOne: jest.Mock;
+    findOne: jest.Mock<() => Promise<ReservationEntity | null>>;
     find: jest.Mock;
     create: jest.Mock;
-    save: jest.Mock;
+    save: jest.Mock<(book: ReservationEntity) => Promise<ReservationEntity>>;
   };
   let roomsRepositoryMock: { findOneBy: jest.Mock };
   let reservationRulesServiceMock: { ensureCanCancel: jest.Mock };
 
   beforeEach(async () => {
     reservationsRepositoryMock = {
-      findOne: jest.fn(),
+      findOne: jest.fn<() => Promise<ReservationEntity | null>>(),
       find: jest.fn(),
       create: jest.fn(),
-      save: jest.fn(),
+      save: jest.fn<() => Promise<ReservationEntity>>(),
     };
     roomsRepositoryMock = { findOneBy: jest.fn() };
     reservationRulesServiceMock = { ensureCanCancel: jest.fn() };
@@ -50,7 +50,23 @@ describe('ReservationsService', () => {
     const savedReservation = { ...reservation, status: 'cancelled' } as ReservationEntity;
 
     // TODO TEST 2: Arrange dependencies, call cancel(7), and check the required behavior.
-    throw new Error('TODO TEST 2: complete the successful cancellation test');
+    reservationsRepositoryMock.findOne.mockResolvedValue(reservation);
+    reservationsRepositoryMock.save.mockResolvedValue(savedReservation);
+
+    //act
+    const result = await service.cancel(7);
+
+    //assert
+    expect(reservationRulesServiceMock.ensureCanCancel).toHaveBeenCalledWith(reservation);
+
+    expect(reservationsRepositoryMock.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: 7,
+        status: 'cancelled',
+      }),
+    );
+
+  expect(result).toEqual(savedReservation);
   });
 
   it('does not change or save a reservation when the rule rejects cancellation', async () => {
