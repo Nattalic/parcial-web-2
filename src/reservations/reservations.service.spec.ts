@@ -13,7 +13,7 @@ describe('ReservationsService', () => {
     findOne: jest.Mock<() => Promise<ReservationEntity | null>>;
     find: jest.Mock;
     create: jest.Mock;
-    save: jest.Mock<(book: ReservationEntity) => Promise<ReservationEntity>>;
+    save: jest.Mock<(reservation: ReservationEntity) => Promise<ReservationEntity>>;
   };
   let roomsRepositoryMock: { findOneBy: jest.Mock };
   let reservationRulesServiceMock: { ensureCanCancel: jest.Mock };
