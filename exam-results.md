@@ -4,7 +4,7 @@ Registrar resultados reales después de implementar y probar los endpoints. Sust
 
 | Petición y datos utilizados | Código esperado | Código obtenido | Observación |
 | --- | --- | --- | --- |
-| Crear una reserva con datos válidos y sala existente. | 201 | Pendiente | |
+| Crear una reserva con datos válidos y sala existente. | 201 | 201 | |
 | Crear con participants como texto. | 400 | Pendiente | |
 | Crear con una propiedad adicional, como status. | 400 | Pendiente | |
 | Crear con una sala inexistente. | 404 | Pendiente | |
@@ -23,4 +23,5 @@ Registrar el resultado de `npm test`.
 | 2. El servicio cancela y guarda una reserva activa. | Pendiente |
 | 3. Si la regla simulada rechaza, conserva active y no guarda. | Pendiente |
 
-Resumen de ejecución: pendiente.
+Resumen de ejecución:
+

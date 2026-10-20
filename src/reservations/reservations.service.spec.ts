@@ -83,16 +83,14 @@ describe('ReservationsService', () => {
     reservationsRepositoryMock.findOne.mockResolvedValue(reservation);
 
     reservationRulesServiceMock.ensureCanCancel.mockImplementation(() => {
-      throw new ConflictException('Reservation is already cancelled');
+      throw new ConflictException('Cannot cancel this reservation');
     });
 
     // Act and Assert
-    await expect(service.markAsReady(5)).rejects.toBeInstanceOf(
+    await expect(service.cancel(9)).rejects.toBeInstanceOf(
       ConflictException,
     );
 
-    expect(repositoryMock.save).not.toHaveBeenCalled();
-
-    throw new Error('TODO TEST 3: complete the rejected cancellation test');
+    expect(reservationsRepositoryMock.save).not.toHaveBeenCalled();
   });
 });
