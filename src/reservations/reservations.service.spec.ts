@@ -86,11 +86,12 @@ describe('ReservationsService', () => {
       throw new ConflictException('Cannot cancel this reservation');
     });
 
-    // Act and Assert
+    //act and assert
     await expect(service.cancel(9)).rejects.toBeInstanceOf(
       ConflictException,
     );
 
+    expect(reservation.status).toBe('active');
     expect(reservationsRepositoryMock.save).not.toHaveBeenCalled();
   });
 });
